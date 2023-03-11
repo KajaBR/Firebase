@@ -19,3 +19,15 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+import { getStorage } from "firebase/storage";
+const storage = getStorage(app);
+const url = "https://firebasestorage.googleapis.com/v0/b/fir-sda-7dff6.appspot.com/o/Test%2F312360517_1340931083400403_6255894437548427742_n.jpg?alt=media&token=1086124e-3bb0-47ea-9fc2-6601229c6c6f";
+
+// przechowuje element html
+const img = document.createElement("img");
+
+img.setAttribute("src", url);
+// img.src=url to samo co wyzej
+document.body.appendChild(img);
+
+
