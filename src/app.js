@@ -152,9 +152,18 @@ const storageRef = ref(storage);
 listAll(storageRef).then(res => {
  const myol = document.getElementById("photoList")
   for(let i = 0; i < res.items.length; i ++){
+
     const myli = document.createElement("li");
-    myli.innerText = res.items[i].name;
+    const mybutton = document.createElement("button");
+
+    mybutton.addEventListener('click', () => {
+      console.log("hejka!")
+    })
+
+    myli.innerText = res.items[i].name; //res... dot nazwy zdjęcia
+    mybutton.innerText = "Pokaż zdjęcie";
+
     myol.appendChild(myli);
-    console.log(res.items[i].name);
+    myol.appendChild(mybutton);
   };
 });
