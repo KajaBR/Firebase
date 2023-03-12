@@ -19,7 +19,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, getStorage, listAll, ref, uploadBytes } from "firebase/storage";
 const storage = getStorage(app);
 
 // ZDJĘCIE
@@ -105,24 +105,56 @@ const storage = getStorage(app);
 // ----------------------------------------------------------------------------
 
 // pobieranie zdjęć z firebase na stronę
-const headerInfo = document.getElementById("myHeader");
-const myShowFileNameInput = document.getElementById("myShowFileName");
-const showFilebtn = document.getElementById("show");
+// const headerInfo = document.getElementById("myHeader");
+// const myShowFileNameInput = document.getElementById("myShowFileName");
+// const showFilebtn = document.getElementById("show");
 
-showFilebtn.addEventListener("click", () =>{
-  const imageRef = ref(storage, myShowFileNameInput.value);
-  headerInfo.innerText = "";
-  getDownloadURL(imageRef).then(url => {
-    const img = document.createElement("img");//tu bedzie się wyświetlać ile razy klkniemy
-    //jeśli tą linijkę przeniesiemy wyżej bedzie się wyświetlac tylko raz bezwględu na to ile razy kliniemy
-    img.src = url;
-    img.style.width = "250px";
-    document.body.appendChild(img); 
-    // kiedy błędna nazwa niżej
-  }).catch(ex=>{
-    headerInfo.innerText = "Zdjęcie nie istnieje!";
-  });
-});
+// showFilebtn.addEventListener("click", () =>{
+//   const imageRef = ref(storage, myShowFileNameInput.value);
+//   headerInfo.innerText = "";
+//   getDownloadURL(imageRef).then(url => {
+//     const img = document.createElement("img");//tu bedzie się wyświetlać ile razy klkniemy
+//     //jeśli tą linijkę przeniesiemy wyżej bedzie się wyświetlac tylko raz bezwględu na to ile razy kliniemy
+//     img.src = url;
+//     img.style.width = "250px";
+//     document.body.appendChild(img); 
+//     // kiedy błędna nazwa niżej
+//   }).catch(ex=>{
+//     headerInfo.innerText = "Zdjęcie nie istnieje!";
+//   });
+// });
 
 
 // ------------------------------------------------------------------------------
+
+// const myShowFileNameInput = document.getElementById("myShowFileName"); //tu są inne id !!!
+// const showFileBtn = document.getElementById("showPhotoBtn");
+// const img = document.createElement("img");
+
+// showFileBtn.addEventListener("click", () => {
+//   const imageRef = ref(storage, myShowFileNameInput.value);
+
+//   headerInfo.innerText = "";
+
+  // getDownloadURL(imageRef).then(url => {
+  //   img.src = url;
+  //   img.style.width = "250px";
+  //   document.body.appendChild(img);
+  // })
+//     .catch(ex => {
+//       headerInfo.innerText = "FOTO NIE ISTNIEJE!!!";
+//     });
+// });
+
+// ------------------------------------------------------------------------
+const storageRef = ref(storage);
+
+listAll(storageRef).then(res => {
+ const myol = document.getElementById("photoList")
+  for(let i = 0; i < res.items.length; i ++){
+    const myli = document.createElement("li");
+    myli.innerText = res.items[i].name;
+    myol.appendChild(myli);
+    console.log(res.items[i].name);
+  };
+});
