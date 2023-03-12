@@ -52,12 +52,16 @@ const storage = getStorage(app);
 // })
 
 // przesłanie pliku z komputera do firebase
+const headerInfo = document.getElementById("myHeader");
 document.getElementById("btn").addEventListener("click", () => {
+  headerInfo.innerText = "Przesyłam zdjęcię ...";
+
   const file = document.getElementById("myFile").files[0];
   const imageRef = ref(storage, "imageNew.jpg");
-  
-  
+
   uploadBytes(imageRef, file).then(() => {
-      console.log("Sukces!");
+    headerInfo.innerText = "Zdjęcie zostało przesłane!";
   })
-})
+
+});
+
