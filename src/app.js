@@ -19,25 +19,45 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-import { getStorage } from "firebase/storage";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
 const storage = getStorage(app);
-const url = "https://firebasestorage.googleapis.com/v0/b/fir-sda-7dff6.appspot.com/o/Test%2F312360517_1340931083400403_6255894437548427742_n.jpg?alt=media&token=1086124e-3bb0-47ea-9fc2-6601229c6c6f";
 
-// przechowuje element html
-const img = document.createElement("img");
+// ZDJĘCIE
+// const url = "https://firebasestorage.googleapis.com/v0/b/fir-sda-7dff6.appspot.com/o/Test%2F312360517_1340931083400403_6255894437548427742_n.jpg?alt=media&token=1086124e-3bb0-47ea-9fc2-6601229c6c6f";
 
-img.setAttribute("src", url);
-// img.src = url to samo co wyzej
-document.body.appendChild(img);
+// // przechowuje element html
+// const img = document.createElement("img");
 
-// ćwiczenie
+// img.setAttribute("src", url);
+// // img.src = url to samo co wyzej
+// document.body.appendChild(img);
 
-fetch("https://reqres.in/api/users") // fetch domyślnie robi geta i pobiera jakieśdane 
-.then((daneZpromisa) => daneZpromisa.json())
-.then((daneZjson) => console.log(daneZjson.data));
+// ćwiczenie - pobieranie danych
 
-async function myFunc () {
-  const data = await fetch("https://reqres.in/api/users")
-  const users = await data.json();
-  console.log(users.data);
-}
+// fetch("https://reqres.in/api/users") // fetch domyślnie robi geta i pobiera jakieśdane 
+// .then((daneZpromisa) => daneZpromisa.json())
+// .then((daneZjson) => console.log(daneZjson.data));
+
+// async function myFunc () {
+//   const data = await fetch("https://reqres.in/api/users")
+//   const users = await data.json();
+//   console.log(users.data);
+// }
+
+// const file = document.getElementById("myFile").files[0];
+// const imageRef = ref(storage, "imageNew.jpg");
+
+// uploadBytes(imageRef, file).then((uploadResult) => {
+//     console.log("Sukces!");
+// })
+
+// przesłanie pliku z komputera do firebase
+document.getElementById("btn").addEventListener("click", () => {
+  const file = document.getElementById("myFile").files[0];
+  const imageRef = ref(storage, "imageNew.jpg");
+  
+  
+  uploadBytes(imageRef, file).then(() => {
+      console.log("Sukces!");
+  })
+})
