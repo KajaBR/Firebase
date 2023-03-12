@@ -19,7 +19,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-import { getDownloadURL, getStorage, listAll, ref, uploadBytes } from "firebase/storage";
+import { deleteObject, getDownloadURL, getStorage, listAll, ref, uploadBytes } from "firebase/storage";
 const storage = getStorage(app);
 
 // ZDJĘCIE
@@ -155,6 +155,7 @@ listAll(storageRef).then(res => {
 
     const myli = document.createElement("li");
     const mybutton = document.createElement("button");
+    const myUsun = document.createElement("button");
 
     mybutton.addEventListener('click', () => {
       const imageRef = ref(storage, res.items[i].name);
@@ -166,10 +167,19 @@ listAll(storageRef).then(res => {
       });
     });
 
+    myUsun.addEventListener("click", () => {
+      const imageRef = ref(storage, res.items[i].name);
+      deleteObject(imageRef).then(url => {
+        console.log("paa");
+      });
+    });
+
     myli.innerText = res.items[i].name; //res... dot nazwy zdjęcia
     mybutton.innerText = "Pokaż zdjęcie";
+    myUsun.innerText = "usuń";
 
     myol.appendChild(myli);
     myol.appendChild(mybutton);
+    myol.appendChild(myUsun);
   };
 });
