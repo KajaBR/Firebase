@@ -30,4 +30,22 @@ img.setAttribute("src", url);
 // img.src=url to samo co wyzej
 document.body.appendChild(img);
 
+// PROMISE
+const mojaPupaJson = fetch().then((pupa123) => {
+  return pupa123.json()
+});
+//const mojaPupaJson = fetch().then((pupa123) => pupa123.json());
+mojaPupaJson.then((data) => console.log(data)) //ta linia bedzie działać z 
+// DWOMA LINIJKAMI NA SAMEJ GÓRZE i z tą 
+// która znajduje się bezpośrednio nad nią 
 
+fetch()
+.then((pupa123) => pupa123.json())
+.then((data) => console.log(data));
+
+
+// asynk
+
+
+
+// await
