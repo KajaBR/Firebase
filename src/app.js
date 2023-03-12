@@ -19,7 +19,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 const storage = getStorage(app);
 
 // ZDJĘCIE
@@ -51,17 +51,55 @@ const storage = getStorage(app);
 //     console.log("Sukces!");
 // })
 
+
+// --------------------------------------------------------------------------------------
 // przesłanie pliku z komputera do firebase
-const headerInfo = document.getElementById("myHeader");
-document.getElementById("btn").addEventListener("click", () => {
-  headerInfo.innerText = "Przesyłam zdjęcię ...";
+// const headerInfo = document.getElementById("myHeader");
+// document.getElementById("btn").addEventListener("click", () => {
+//   headerInfo.innerText = "Przesyłam zdjęcię ...";
 
-  const file = document.getElementById("myFile").files[0];
-  const imageRef = ref(storage, "imageNew.jpg");
+//   const file = document.getElementById("myFile").files[0];
+//   const imageRef = ref(storage, file.name);// plik bedzie miał tą samą nazwę 
+//   // jak u nas na komputerze, jeśli chcemy stałą nazwę to zamiast file.name 
+//   // piszemy daną nazwę w nawiasach
 
-  uploadBytes(imageRef, file).then(() => {
-    headerInfo.innerText = "Zdjęcie zostało przesłane!";
-  })
+//   uploadBytes(imageRef, file).then(() => {
+//     headerInfo.innerText = "Zdjęcie zostało przesłane!";
+//   })
 
-});
+// });
 
+// ----------------------------------------------------------------------
+// aby użytkownik mógł zmieniać nazwę pliku
+// 1. dodać input do html
+// 2.pobrac z inputa
+// 3.przekazać jako argument
+// 4. callback do domyślnej nazwy pliku
+// const headerInfo = document.getElementById("myHeader");
+// const FileNameInput = document.getElementById("nameFile");
+// document.getElementById("btn").addEventListener("click", () => {
+//   headerInfo.innerText = "Przesyłam zdjęcię ...";
+
+//   const file = document.getElementById("myFile").files[0];
+//   let fileName = file.name; // jeśli użytkownik nic nie wpisze to plik bedzie się nazywał jak na komputerze
+
+//   if(FileNameInput.value){
+//     fileName = FileNameInput.value;
+//   }
+//   const imageRef = ref(storage, fileName);
+
+//   uploadBytes(imageRef, file).then(() => {
+//     headerInfo.innerText = "Zdjęcie zostało przesłane!"; })
+// });
+
+// ----------------------------------------------------------------------------
+// pobieranie zdjęć z firebase na stronę
+const imageRef = ref(storage, "tulip.jpg");
+getDownloadURL(imageRef).then(url => {
+  const img = document.createElement("img");
+  img.src = url;
+  img.style.width = "250px";
+  document.body.appendChild(img);
+})
+
+// ----------------------------------------------------------------------------
