@@ -93,13 +93,36 @@ const storage = getStorage(app);
 // });
 
 // ----------------------------------------------------------------------------
-// pobieranie zdjęć z firebase na stronę
-const imageRef = ref(storage, "tulip.jpg");
-getDownloadURL(imageRef).then(url => {
-  const img = document.createElement("img");
-  img.src = url;
-  img.style.width = "250px";
-  document.body.appendChild(img);
-})
+// // pobieranie zdjęć z firebase na stronę
+// const imageRef = ref(storage, "tulip.jpg");
+// getDownloadURL(imageRef).then(url => {
+//   const img = document.createElement("img");
+//   img.src = url;
+//   img.style.width = "250px";
+//   document.body.appendChild(img);
+// })
 
 // ----------------------------------------------------------------------------
+
+// pobieranie zdjęć z firebase na stronę
+const headerInfo = document.getElementById("myHeader");
+const myShowFileNameInput = document.getElementById("myShowFileName");
+const showFilebtn = document.getElementById("show");
+
+showFilebtn.addEventListener("click", () =>{
+  const imageRef = ref(storage, myShowFileNameInput.value);
+  headerInfo.innerText = "";
+  getDownloadURL(imageRef).then(url => {
+    const img = document.createElement("img");//tu bedzie się wyświetlać ile razy klkniemy
+    //jeśli tą linijkę przeniesiemy wyżej bedzie się wyświetlac tylko raz bezwględu na to ile razy kliniemy
+    img.src = url;
+    img.style.width = "250px";
+    document.body.appendChild(img); 
+    // kiedy błędna nazwa niżej
+  }).catch(ex=>{
+    headerInfo.innerText = "Zdjęcie nie istnieje!";
+  });
+});
+
+
+// ------------------------------------------------------------------------------
