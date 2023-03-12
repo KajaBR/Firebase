@@ -157,8 +157,14 @@ listAll(storageRef).then(res => {
     const mybutton = document.createElement("button");
 
     mybutton.addEventListener('click', () => {
-      console.log("hejka!")
-    })
+      const imageRef = ref(storage, res.items[i].name);
+      getDownloadURL(imageRef).then(url => {
+        let MyPhoto = document.getElementById("imgPhoto");
+        MyPhoto.src = url;
+        MyPhoto.style.width = "250px";
+        console.log(MyPhoto);
+      });
+    });
 
     myli.innerText = res.items[i].name; //res... dot nazwy zdjęcia
     mybutton.innerText = "Pokaż zdjęcie";
