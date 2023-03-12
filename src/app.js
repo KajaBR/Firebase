@@ -44,8 +44,16 @@ fetch()
 .then((data) => console.log(data));
 
 
-// asynk
+// asynk i await
+// to samo co te trzy linjiki wyżej 
+async function MojaAsynchronicznaFunkcja(){
+  const pupa123 = await fetch(); 
+  const data = await pupa123.json();//json zwraca promise
+  console.log(data);
+}
+//pupa123 jest tu odpowiedzią 
+// async sprawia że ta funkcja zawsze zwraca promise
 
 
 
-// await
+
