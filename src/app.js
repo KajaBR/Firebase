@@ -27,33 +27,17 @@ const url = "https://firebasestorage.googleapis.com/v0/b/fir-sda-7dff6.appspot.c
 const img = document.createElement("img");
 
 img.setAttribute("src", url);
-// img.src=url to samo co wyzej
+// img.src = url to samo co wyzej
 document.body.appendChild(img);
 
-// PROMISE
-const mojaPupaJson = fetch().then((pupa123) => {
-  return pupa123.json()
-});
-//const mojaPupaJson = fetch().then((pupa123) => pupa123.json());
-mojaPupaJson.then((data) => console.log(data)) //ta linia bedzie działać z 
-// DWOMA LINIJKAMI NA SAMEJ GÓRZE i z tą 
-// która znajduje się bezpośrednio nad nią 
+// ćwiczenie
 
-fetch()
-.then((pupa123) => pupa123.json())
-.then((data) => console.log(data));
+fetch("https://reqres.in/api/users") // fetch domyślnie robi geta i pobiera jakieśdane 
+.then((daneZpromisa) => daneZpromisa.json())
+.then((daneZjson) => console.log(daneZjson.data));
 
-
-// asynk i await
-// to samo co te trzy linjiki wyżej 
-async function MojaAsynchronicznaFunkcja(){
-  const pupa123 = await fetch(); 
-  const data = await pupa123.json();//json zwraca promise
-  console.log(data);
+async function myFunc () {
+  const data = await fetch("https://reqres.in/api/users")
+  const users = await data.json();
+  console.log(users.data);
 }
-//pupa123 jest tu odpowiedzią 
-// async sprawia że ta funkcja zawsze zwraca promise
-
-
-
-
