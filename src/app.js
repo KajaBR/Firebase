@@ -147,39 +147,43 @@ const storage = getStorage(app);
 // });
 
 // ------------------------------------------------------------------------
-const storageRef = ref(storage);
+// const storageRef = ref(storage);
 
-listAll(storageRef).then(res => {
- const myol = document.getElementById("photoList")
-  for(let i = 0; i < res.items.length; i ++){
+// listAll(storageRef).then(res => {
+//  const myol = document.getElementById("photoList")
+//   for(let i = 0; i < res.items.length; i ++){
 
-    const myli = document.createElement("li");
-    const mybutton = document.createElement("button");
-    const myUsun = document.createElement("button");
+//     const myli = document.createElement("li");
+//     const mybutton = document.createElement("button");
+//     const myUsun = document.createElement("button");
 
-    mybutton.addEventListener('click', () => {
-      const imageRef = ref(storage, res.items[i].name);
-      getDownloadURL(imageRef).then(url => {
-        let MyPhoto = document.getElementById("imgPhoto");
-        MyPhoto.src = url;
-        MyPhoto.style.width = "250px";
-        console.log(MyPhoto);
-      });
-    });
+//     mybutton.addEventListener('click', () => {
+//       const imageRef = ref(storage, res.items[i].name);
+//       getDownloadURL(imageRef).then(url => {
+//         let MyPhoto = document.getElementById("imgPhoto");
+//         MyPhoto.src = url;
+//         MyPhoto.style.width = "250px";
+//         console.log(MyPhoto);
+//       });
+//     });
 
-    myUsun.addEventListener("click", () => {
-      const imageRef = ref(storage, res.items[i].name);
-      deleteObject(imageRef).then(url => {
-        console.log("paa");
-      });
-    });
+//     myUsun.addEventListener("click", () => {
+//       const imageRef = ref(storage, res.items[i].name);
+//       deleteObject(imageRef).then(url => {
+//         console.log("paa");
+//       });
+//     });
 
-    myli.innerText = res.items[i].name; //res... dot nazwy zdjęcia
-    mybutton.innerText = "Pokaż zdjęcie";
-    myUsun.innerText = "usuń";
+//     myli.innerText = res.items[i].name; //res... dot nazwy zdjęcia
+//     mybutton.innerText = "Pokaż zdjęcie";
+//     myUsun.innerText = "usuń";
 
-    myol.appendChild(myli);
-    myol.appendChild(mybutton);
-    myol.appendChild(myUsun);
-  };
-});
+//     myol.appendChild(myli);
+//     myol.appendChild(mybutton);
+//     myol.appendChild(myUsun);
+//   };
+// });
+
+
+// --------------------------------------------------------------------------------------
+// zadanie 7
