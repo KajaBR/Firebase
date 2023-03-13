@@ -187,3 +187,22 @@ const storage = getStorage(app);
 
 // --------------------------------------------------------------------------------------
 // zadanie 7
+
+const storageRef = ref(storage);
+
+listAll(storageRef).then(res => {
+  const myol = document.getElementById("photoList");
+  for(let i = 0; i < res.items.length; i ++){
+    console.log(res.items.length)
+
+  const myli = document.createElement("li");
+  const mybutton = document.createElement("button");
+
+  myli.innerText = res.items[i].name; 
+  mybutton.innerText = "Pokaż folder";
+
+  myol.appendChild(myli);
+  myol.appendChild(mybutton);
+  
+  }
+});
