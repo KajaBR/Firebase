@@ -189,28 +189,26 @@ const storage = getStorage(app);
 // zadanie 7
 
 const file = document.getElementById("myFile");
-const imageRef = ref(storage, type = "Folder");
-uploadBytes(imageRef, file).then((uploadResult) => {
-  // for(let i = 0; i < imageRef.name.length; i ++){
-    console.log(imageRef.name);
-  // };
-});
+const folderRef = ref(storage, "asthetic/");
+uploadBytes(folderRef, file).then((uploadResult) => {
+ 
+  const myol = document.getElementById("myFile");
+  const myli = document.createElement("li");
+  const mybutton = document.createElement("button");
 
-// const storageRef = ref(storage, folder);
+  myli.innerText = folderRef.fullPath; 
+  mybutton.innerText = "Pokaż waratość folderu";
 
-// listAll(storageRef).then(res => {
-//   const myol = document.getElementById("photoList");
-//   for(let i = 0; i < res.items.length; i ++){
-//     console.log(folder);
-
-//   const myli = document.createElement("li");
-//   const mybutton = document.createElement("button");
-
-//   myli.innerText = res.items[i].name; 
-//   mybutton.innerText = "Pokaż folder";
-
-//   myol.appendChild(myli);
-//   myol.appendChild(mybutton);
+  mybutton.addEventListener("click",() => {
+    const fileRef = ref(storage, res.items[i].name);
+    // for(let i = 0; i < fileRef.length; i ++){
+    console.log(fileRef.length);
+    // };
+  });
   
-//   }
-// });
+  myol.appendChild(myli);
+  myol.appendChild(mybutton);
+  
+  console.log("sukces!");
+  
+});
