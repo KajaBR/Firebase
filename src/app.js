@@ -186,29 +186,25 @@ const storage = getStorage(app);
 
 
 // --------------------------------------------------------------------------------------
-// zadanie 7
+// zadanie 8
 
-const file = document.getElementById("myFile");
-const folderRef = ref(storage, "asthetic/");
-uploadBytes(folderRef, file).then((uploadResult) => {
- 
-  const myol = document.getElementById("myFile");
-  const myli = document.createElement("li");
-  const mybutton = document.createElement("button");
+// wyswietalnie forlderow
+// listAll(storageRef).then(res => {
+//   res.prefixes.forEach(pref => {
+//     console.log(pref.name);  
+//   })
+// });
 
-  myli.innerText = folderRef.fullPath; 
-  mybutton.innerText = "Pokaż waratość folderu";
+const storageRef = ref(storage);
 
-  mybutton.addEventListener("click",() => {
-    const fileRef = ref(storage, res.items[i].name);
-    // for(let i = 0; i < fileRef.length; i ++){
-    console.log(fileRef.length);
-    // };
-  });
-  
-  myol.appendChild(myli);
-  myol.appendChild(mybutton);
-  
-  console.log("sukces!");
-  
+listAll(storageRef).then(res => {
+  res.prefixes.forEach(pref => {
+    console.log(pref.name);
+  })
 });
+
+
+
+ 
+
+
