@@ -195,11 +195,21 @@ const storage = getStorage(app);
 //   })
 // });
 
-const storageRef = ref(storage);
+const albumsList = document.getElementById("albumsList");
+const uploadPhotoBtn = document.getElementById("uploadPhoto");
+uploadPhotoBtn.addEventListener("click", () => {
+  if(albumsList.value){
+  console.log(albumsList.value);//wyswietlanie naszego selecta
+  };
+});
 
+const storageRef = ref(storage);
 listAll(storageRef).then(res => {
   res.prefixes.forEach(pref => {
-    console.log(pref.name);
+    console.log(pref.name); 
+    const albumOption = document.createElement("option");
+    albumOption.innerText = pref.name;
+    albumsList.appendChild(albumOption);
   })
 });
 
