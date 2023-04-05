@@ -189,17 +189,39 @@ const storage = getStorage(app);
 // zadanie 8
 
 // wyswietalnie forlderow
-// listAll(storageRef).then(res => {
-//   res.prefixes.forEach(pref => {
-//     console.log(pref.name);  
-//   })
-// });
+listAll(storageRef).then(res => {
+  res.prefixes.forEach(pref => {
+    console.log(pref.name);  
+  })
+});
 
 const albumsList = document.getElementById("albumsList");
 const uploadPhotoBtn = document.getElementById("uploadPhoto");
+const fileInput = document.getElementById("fileInput");
+const showPhotosBtn = document.getElementById("showPhotos");
+
+// wyświetlanie obrazka, który jest firebase
+showPhotosBtn.addEventListener("click", () => {
+  const albumRef = ref(storage, albumsList.value);
+  listAll(albumRef).then(res => {
+    res.items.forEach(item => {
+      const itemRef = ref(storage, item.fullPath);
+      getDownloadURL(itemRef).then(url => {
+        const img = document.createElement("img");
+        img.src = url;
+        img.style.width = "200px";
+        document.body.appendChild(img);
+      })
+    })
+  })
+})
+
 uploadPhotoBtn.addEventListener("click", () => {
   if(albumsList.value){
   console.log(albumsList.value);//wyswietlanie naszego selecta
+  const file = fileInput.files[0];
+  const imageRef = ref(storage, `${albumsList.value}/${file.name}`);
+  uploadBytes(imageRef, file).then(() => console.log("sukces!"));
   };
 });
 
