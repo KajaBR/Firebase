@@ -2,10 +2,16 @@ import './../styles/styles.css';
 
 console.log('Siemka z Webpack');
 
+const app = initializeApp(firebaseConfig);
+const storage = getStorage(app);
+const db = getFirestore(app);
+
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
+import {addDoc, collection, doc, getDoc, getFirestore, setDoc} from "firebase/firestore"
+import { deleteObject, getDownloadURL, getStorage, listAll, ref, uploadBytes } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -18,9 +24,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-import { deleteObject, getDownloadURL, getStorage, listAll, ref, uploadBytes } from "firebase/storage";
-const storage = getStorage(app);
+
 
 // ZDJĘCIE
 // const url = "https://firebasestorage.googleapis.com/v0/b/fir-sda-7dff6.appspot.com/o/Test%2F312360517_1340931083400403_6255894437548427742_n.jpg?alt=media&token=1086124e-3bb0-47ea-9fc2-6601229c6c6f";
@@ -189,54 +193,153 @@ const storage = getStorage(app);
 // zadanie 8
 
 // wyswietalnie forlderow
-listAll(storageRef).then(res => {
-  res.prefixes.forEach(pref => {
-    console.log(pref.name);  
-  })
-});
+// listAll(storageRef).then(res => {
+//   res.prefixes.forEach(pref => {
+//     console.log(pref.name);  
+//   })
+// });
 
-const albumsList = document.getElementById("albumsList");
-const uploadPhotoBtn = document.getElementById("uploadPhoto");
-const fileInput = document.getElementById("fileInput");
-const showPhotosBtn = document.getElementById("showPhotos");
+// const albumsList = document.getElementById("albumsList");
+// const uploadPhotoBtn = document.getElementById("uploadPhoto");
+// const fileInput = document.getElementById("fileInput");
+// const showPhotosBtn = document.getElementById("showPhotos");
 
-// wyświetlanie obrazka, który jest firebase
-showPhotosBtn.addEventListener("click", () => {
-  const albumRef = ref(storage, albumsList.value);
-  listAll(albumRef).then(res => {
-    res.items.forEach(item => {
-      const itemRef = ref(storage, item.fullPath);
-      getDownloadURL(itemRef).then(url => {
-        const img = document.createElement("img");
-        img.src = url;
-        img.style.width = "200px";
-        document.body.appendChild(img);
-      })
-    })
+// // wyświetlanie obrazka, który jest firebase
+// showPhotosBtn.addEventListener("click", () => {
+//   const albumRef = ref(storage, albumsList.value);
+//   listAll(albumRef).then(res => {
+//     res.items.forEach(item => {
+//       const itemRef = ref(storage, item.fullPath);
+//       getDownloadURL(itemRef).then(url => {
+//         const img = document.createElement("img");
+//         img.src = url;
+//         img.style.width = "200px";
+//         document.body.appendChild(img);
+//       });
+//     });
+//   });
+// });
+
+// uploadPhotoBtn.addEventListener("click", () => {
+//   if(albumsList.value){
+//   // console.log(albumsList.value);//wyswietlanie naszego selecta
+//   const file = fileInput.files[0];
+//   const imageRef = ref(storage, `${albumsList.value}/${file.name}`);
+//   uploadBytes(imageRef, file).then(() => console.log("sukces!"));
+//   };
+// });
+
+// const storageRef = ref(storage);
+// listAll(storageRef).then(res => {
+//   res.prefixes.forEach(pref => {
+//     // console.log(pref.name); 
+//     const albumOption = document.createElement("option");
+//     albumOption.innerText = pref.name;
+//     albumsList.appendChild(albumOption);
+//   })
+// });
+
+// zadanie 8 ---------- skopiowane ----------------------------
+// const albumsList = document.getElementById("albumsList");
+// const uploadPhotoBtn = document.getElementById("uploadPhoto");
+// const fileInput = document.getElementById("fileInput");
+// const showPhotosBtn = document.getElementById("showPhotos");
+
+// uploadPhotoBtn.addEventListener("click", () => {
+//   if (albumsList.value) {
+//     const file = fileInput.files[0];
+//     const imageRef = ref(storage, `${albumsList.value}/${file.name}`);
+//     uploadBytes(imageRef, file).then(() => console.log("SUKCES"));
+//   }
+// });
+
+// showPhotosBtn.addEventListener("click", () => {
+//   const albumRef = ref(storage, albumsList.value);
+//   listAll(albumRef).then(res => {
+//     res.items.forEach(item => {
+//       const itemRef = ref(storage, item.fullPath);
+
+//       getDownloadURL(itemRef).then(url => {
+//         const img = document.createElement("img");
+//         img.src = url;
+//         img.style.width = "200px";
+//         document.body.appendChild(img);
+//       })
+//     })
+//   })
+// })
+
+// // document.body.appendChild(img);
+
+// const storageRef = ref(storage);
+// listAll(storageRef).then(res => {
+//   res.prefixes.forEach(pref => {
+//     const albumOption = document.createElement("option");
+//     albumOption.innerText = pref.name;
+//     albumsList.appendChild(albumOption);
+//   })
+// })
+
+//  ------------------------------BAZY-DANYCH-------------------------------------------------
+
+// dodawanie dokumentu do bazy danych
+// const jkDoc = doc(db, "users", "JanKowalskiId"); //baza danych, kolekcja, id
+// setDoc(jkDoc, {
+//   name: "Jan",
+//   surname: "Kowalaski"
+// });
+
+
+
+// const nameInput = document.getElementById("name");
+// const surnameInput = document.getElementById("surname");
+// const ageInput = document.getElementById("age");
+// const addUserBtn = document.getElementById("addUser");
+
+
+// addUserBtn.addEventListener("click", () => {
+//   const jkDoc = doc(db, "users", `${nameInput.value}${surnameInput.value}${ageInput.value}`);
+//   setDoc(jkDoc, {
+//     name: nameInput.value,
+//     surname: surnameInput.value,
+//     age: ageInput.value
+//   }).then(() => console.log("sukces"));
+// })
+
+// // wyswietlanie dokumentów, które znadują się w bazie danych
+// const kajaDoc = doc(db, "user", "JanKowalski");
+// getDoc(kajaDoc).then(resDoc => {
+//   const kaja = resDoc.data();
+//   nameInput.value = kaja.name;
+//   surnameInput.value = kaja.surname;
+//   ageInput.value = kaja.age;
+// })
+
+const nameInput = document.getElementById("name");
+const surnameInput = document.getElementById("surname");
+const ageInput = document.getElementById("age");
+const addUserBtn = document.getElementById("addUser");
+
+// dodawanie dokumentu z randomowym ID
+addUserBtn.addEventListener("click", () => {
+  const userCol = collection(db, "user");
+  addDoc(userCol, {
+    name: nameInput.value,
+    surname: surnameInput.value,
+    age: ageInput.value
   })
 })
 
-uploadPhotoBtn.addEventListener("click", () => {
-  if(albumsList.value){
-  console.log(albumsList.value);//wyswietlanie naszego selecta
-  const file = fileInput.files[0];
-  const imageRef = ref(storage, `${albumsList.value}/${file.name}`);
-  uploadBytes(imageRef, file).then(() => console.log("sukces!"));
-  };
-});
 
-const storageRef = ref(storage);
-listAll(storageRef).then(res => {
-  res.prefixes.forEach(pref => {
-    console.log(pref.name); 
-    const albumOption = document.createElement("option");
-    albumOption.innerText = pref.name;
-    albumsList.appendChild(albumOption);
-  })
-});
-
-
-
- 
-
+getDoc(usersCol).then(docs => {
+  docs.forEach((myDoc => { //iteracja
+    const editBtn = document.createElement("button");
+    editBtn.innerText = "Edit"
+    const myLi = document.createElement("li");
+    const myUser = myDoc.data();
+    myLi.innerText = `${myUser.name} ${myUser.surname} ${myUser.age}`;
+    myLi.appendChild(editBtn);
+    usersList.appendChild(myLi);
+  }))
+})
 
