@@ -363,4 +363,10 @@ editUserBtn.addEventListener("click",() => {
     surname: surnameInput.value,
     age: ageInput.value
   });
+  userIdHeader.innerText= "";
+  nameInput.value = "";
+  surnameInput.value = "";
+  ageInput.value = "";
+  addUserBtn.style.display = "inline-block";
+  editUserBtn.style.display = "none";
 });
