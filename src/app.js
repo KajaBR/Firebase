@@ -10,7 +10,7 @@ const db = getFirestore(app);
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-import {addDoc, collection, doc, getDoc, getFirestore, setDoc} from "firebase/firestore"
+import {addDoc, collection, doc, getDoc, getFirestore, setDoc, updateDoc} from "firebase/firestore"
 import { deleteObject, getDownloadURL, getStorage, listAll, ref, uploadBytes } from "firebase/storage";
 
 // Your web app's Firebase configuration
@@ -319,10 +319,12 @@ const nameInput = document.getElementById("name");
 const surnameInput = document.getElementById("surname");
 const ageInput = document.getElementById("age");
 const addUserBtn = document.getElementById("addUser");
+const userCol = collection(db, "user");
+const editUserBtn = document.getElementById("editUser");
+const userIdHeader = document.getElementById("userId");
 
 // dodawanie dokumentu z randomowym ID
 addUserBtn.addEventListener("click", () => {
-  const userCol = collection(db, "user");
   addDoc(userCol, {
     name: nameInput.value,
     surname: surnameInput.value,
@@ -331,15 +333,34 @@ addUserBtn.addEventListener("click", () => {
 })
 
 
-getDoc(usersCol).then(docs => {
+getDoc(userCol).then(docs => {
   docs.forEach((myDoc => { //iteracja
     const editBtn = document.createElement("button");
-    editBtn.innerText = "Edit"
     const myLi = document.createElement("li");
+
     const myUser = myDoc.data();
+
     myLi.innerText = `${myUser.name} ${myUser.surname} ${myUser.age}`;
+    editBtn.innerText = "Edit"
+
     myLi.appendChild(editBtn);
     usersList.appendChild(myLi);
+
+    editBtn.addEventListener("click", () => {
+      nameInput.value = myUser.name;
+      surnameInput.value = myUser.surname;
+      ageInput.value = myUser.age;
+      addUserBtn.style.display ="none"
+      userIdHeader.innerText = myDoc.id;
+    })
   }))
 })
 
+editUserBtn.addEventListener("click",() => {
+  const userDoc = doc(db, "users", userIdHeader.innerText);
+  updateDoc(userDoc, {
+    name: nameInput.value,
+    surname: surnameInput.value,
+    age: ageInput.value
+  });
+});
